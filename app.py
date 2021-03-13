@@ -222,7 +222,7 @@ class AppWindow(QMainWindow):
                 spaces = []
 
             if line.startswith("#"):
-                if not line.strip().startswith("# Github host dns updated"):
+                if not line.strip().startswith("# Github host"):
                     rows.append(line)
                 continue
 
