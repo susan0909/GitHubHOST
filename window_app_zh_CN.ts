@@ -74,9 +74,29 @@
         <translation>关于(&amp;I)</translation>
     </message>
     <message>
-        <location filename="app.py" line="59"/>
+        <location filename="app.py" line="54"/>
         <source>版本</source>
         <translation>当前版本</translation>
+    </message>
+    <message>
+        <location filename="app.py" line="192"/>
+        <source>警告信息</source>
+        <translation>警告信息</translation>
+    </message>
+    <message>
+        <location filename="app.py" line="194"/>
+        <source>您当前账号无权限修改HOST文件,\n请复制预览框的内容手动覆盖HOST文件内容.</source>
+        <translation>您当前账号无权限修改HOST文件,\n请复制预览框的内容手动覆盖HOST文件内容.</translation>
+    </message>
+    <message>
+        <location filename="app.py" line="205"/>
+        <source>更新成功</source>
+        <translation>更新成功</translation>
+    </message>
+    <message>
+        <location filename="app.py" line="207"/>
+        <source>祝贺你!\n最新的GitHub DNS信息已经保存到你本地的HOST中.</source>
+        <translation>祝贺你!\n最新的GitHub DNS信息已经保存到你本地的HOST中.</translation>
     </message>
 </context>
 </TS>

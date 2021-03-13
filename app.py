@@ -9,7 +9,7 @@ from datetime import datetime
 
 import window_app
 
-from PyQt5.QtCore import QThread, pyqtSignal, QTranslator
+from PyQt5.QtCore import QTranslator
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPalette
 from PyQt5.QtWidgets import QApplication, QMainWindow, QStyle, QFileDialog, QMessageBox
@@ -150,7 +150,7 @@ class AppWindow(QMainWindow):
                 _translate = QtCore.QCoreApplication.translate
                 QMessageBox.critical(
                     self,
-                    _translate("WindowApp", "Host 文件读取错误"),
+                    _translate("WindowApp", "Host read error"),
                     _translate("WindowApp", f"{e}"),
                     QMessageBox.Ok)
 
@@ -169,7 +169,7 @@ class AppWindow(QMainWindow):
         if len(self.domains) < 1:
             QMessageBox.critical(
                 self,
-                _translate("WindowApp", "Host DNS解析错误"),
+                _translate("WindowApp", "Host DNS Error"),
                 _translate("WindowApp", "Application configuration lost!"),
                 QMessageBox.Ok)
             return
@@ -222,7 +222,8 @@ class AppWindow(QMainWindow):
                 spaces = []
 
             if line.startswith("#"):
-                rows.append(line)
+                if not line.strip().startswith("# Github host dns updated"):
+                    rows.append(line)
                 continue
 
             words = set(re.split(r"\s+", line))

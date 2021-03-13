@@ -1,15 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import locale
 import dialog_donate
 
-from PyQt5.QtWidgets import QDialog, QStyle
+from PyQt5.QtCore import QTranslator
+from PyQt5.QtWidgets import QApplication, QDialog, QStyle
 
 
 class DialogDonate(QDialog):
 
     def __init__(self, app, parent=None):
         super(DialogDonate, self).__init__(parent)
+
+        lang, _ = locale.getdefaultlocale()
+        language = "dialog_donate_EN.qm"
+        if "zh_CN" == lang:
+            language = "dialog_donate_zh_CN.qm"
+
+        self.trans = QTranslator()
+        self.trans.load(language)
+        QApplication.instance().installTranslator(self.trans)
+
         self.ui = dialog_donate.Ui_DialogDonate()
         self.ui.setupUi(self)
         from app import AppWindow

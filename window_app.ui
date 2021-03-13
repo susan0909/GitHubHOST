@@ -111,6 +111,13 @@
         </item>
         <item>
          <widget class="QLabel" name="labelPreview">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>预览</string>
           </property>
