@@ -14,8 +14,8 @@
    <string>GitHub HOST</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>Resources/icons/logo.png</normaloff>Resources/icons/logo.png</iconset>
+   <iconset resource="images.qrc">
+    <normaloff>:/icon_logo.png</normaloff>:/icon_logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1">
@@ -216,6 +216,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

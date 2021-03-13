@@ -26,9 +26,9 @@ class AppWindow(QMainWindow):
         super(AppWindow, self).__init__(parent)
 
         lang, _ = locale.getdefaultlocale()
-        language = "window_app_EN.qm"
+        language = "languages/window_app_EN.qm"
         if "zh_CN" == lang:
-            language = "window_app_zh_CN.qm"
+            language = "languages/window_app_zh_CN.qm"
 
         self.trans = QTranslator()
         self.trans.load(language)

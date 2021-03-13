@@ -14,9 +14,9 @@ class DialogDonate(QDialog):
         super(DialogDonate, self).__init__(parent)
 
         lang, _ = locale.getdefaultlocale()
-        language = "dialog_donate_EN.qm"
+        language = "languages/dialog_donate_EN.qm"
         if "zh_CN" == lang:
-            language = "dialog_donate_zh_CN.qm"
+            language = "languages/dialog_donate_zh_CN.qm"
 
         self.trans = QTranslator()
         self.trans.load(language)

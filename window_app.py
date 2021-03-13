@@ -16,7 +16,7 @@ class Ui_WindowApp(object):
         WindowApp.setObjectName("WindowApp")
         WindowApp.resize(800, 600)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("Resources/icons/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icon_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         WindowApp.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(WindowApp)
         self.centralwidget.setObjectName("centralwidget")
@@ -137,3 +137,4 @@ class Ui_WindowApp(object):
         self.actionReportIssue.setText(_translate("WindowApp", "报告问题(&B)"))
         self.actionAbout.setText(_translate("WindowApp", "关于(&I)"))
         self.actionDonate.setText(_translate("WindowApp", "请我喝一杯(&D)"))
+import images_rc
