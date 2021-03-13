@@ -15,9 +15,6 @@ class Ui_DialogUpdate(object):
     def setupUi(self, DialogUpdate):
         DialogUpdate.setObjectName("DialogUpdate")
         DialogUpdate.resize(600, 100)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("Resources/icons/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        DialogUpdate.setWindowIcon(icon)
         self.verticalLayout = QtWidgets.QVBoxLayout(DialogUpdate)
         self.verticalLayout.setObjectName("verticalLayout")
         self.labelTitle = QtWidgets.QLabel(DialogUpdate)
@@ -42,5 +39,4 @@ class Ui_DialogUpdate(object):
 
     def retranslateUi(self, DialogUpdate):
         _translate = QtCore.QCoreApplication.translate
-        DialogUpdate.setWindowTitle(_translate("DialogUpdate", "GitHub HOST - Update"))
         self.labelTitle.setText(_translate("DialogUpdate", "Progress"))

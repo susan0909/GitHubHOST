@@ -4,34 +4,40 @@
 from configparser import ConfigParser, SectionProxy
 
 
-def GetConfig(parser, section=None):
-    """Get configuration values as dictionary"""
-
-    if not section or not len(section):
-        section = 'DEFAULT'
-
-    if section != 'DEFAULT' and section not in parser.sections():
-        return None
-
-    if isinstance(parser[section], SectionProxy):
-        data = {}
-        for key in parser[section].keys():
-            data[key] = parser[section].get(key)
-        return data
-    return None
+configurations = {
+    "version": "1.0",
+    "email": "susan_tony_li@163.com",
+    "name": "GitHub HOST",
+    "website": "https://github.com/susan0909/GitHubHOST",
+    "issue": "https://github.com/susan0909/GitHubHOST/issues",
+    "manual": "https://github.com/susan0909/GitHubHOST/blob/main/README.md",
+    "assets": "resources",
+    "domains": [
+        "github.com",
+        "api.github.com",
+        "assets-cdn.github.com",
+        "avatars.githubusercontent.com",
+        "avatars0.githubusercontent.com",
+        "camo.githubusercontent.com",
+        "cloud.githubusercontent.com",
+        "codeload.github.com",
+        "favicons.githubusercontent.com",
+        "gist.github.com",
+        "gist.githubusercontent.com",
+        "github.githubassets.com",
+        "marketplace-screenshots.githubusercontent.com",
+        "octocaptcha.com",
+        "raw.githubusercontent.com",
+        "repository-images.githubusercontent.com",
+        "uploads.github.com",
+        "user-images.githubusercontent.com",
+        "github.global.ssl.fastly.net"
+    ]
+}
 
 
 class Config:
 
-    def __init__(self, cfg, encoding="utf-8"):
-        """Application configuration file"""
+    def get(self, key, default=None):
 
-        self.parser = ConfigParser()
-        self.parser.read(cfg, encoding=encoding)
-
-    def get(self, key, section=None, default=None):
-        data = GetConfig(self.parser, section)
-        if not isinstance(data, dict):
-            return None
-
-        return data.get(key, default)
+        return configurations.get(key, default)

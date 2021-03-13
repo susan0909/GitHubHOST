@@ -51,7 +51,7 @@ class AppWindow(QMainWindow):
         statusVersion = QtWidgets.QLabel()
         _translate = QtCore.QCoreApplication.translate
 
-        version = "{}: {}".format(_translate("WindowApp", "版本"), self.config.get("version"))
+        version = "{}: {}".format(_translate("WindowApp", "版本"), self.config.get("version", "0.0"))
         statusVersion.setText(version)
 
         self.ui.statusbar.addPermanentWidget(statusVersion)
@@ -158,10 +158,10 @@ class AppWindow(QMainWindow):
         """Start update host dns"""
 
         _translate = QtCore.QCoreApplication.translate
-        domain_cfg = self.config.get('domains', 'github')
+        domain_cfg = self.config.get('domains', [])
         self.domains = {}
         if domain_cfg:
-            for domain in domain_cfg.split(","):
+            for domain in domain_cfg:
                 domain = domain.strip()
                 if len(domain) > 3:
                     self.domains[domain] = None

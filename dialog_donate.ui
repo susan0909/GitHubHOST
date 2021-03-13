@@ -14,8 +14,8 @@
    <string>GitHub HOST - Donate</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>Resources/icons/logo.png</normaloff>Resources/icons/logo.png</iconset>
+   <iconset resource="images.qrc">
+    <normaloff>:/icon_logo.png</normaloff>:/icon_logo.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
@@ -45,7 +45,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap>Resources/icons/donate.png</pixmap>
+        <pixmap resource="images.qrc">:/icon_donate.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -138,7 +138,7 @@
             <string notr="true"/>
            </property>
            <property name="pixmap">
-            <pixmap>Resources/susan-wechat.jpg</pixmap>
+            <pixmap resource="images.qrc">:/image_susan-wechat.jpg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -316,7 +316,7 @@
             <string notr="true"/>
            </property>
            <property name="pixmap">
-            <pixmap>Resources/susan-alipay.jpg</pixmap>
+            <pixmap resource="images.qrc">:/image_susan-alipay.jpg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -454,7 +454,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>btnClose</sender>

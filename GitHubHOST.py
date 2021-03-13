@@ -19,7 +19,7 @@ if __name__ == '__main__':
     # Create application and initialize
     app = QApplication(sys.argv)
     app.setFont(QFont("NSimSun", 9))
-    config = config.Config("config.ini")
+    config = config.Config()
     window = AppWindow(config)
 
     # Running

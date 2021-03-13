@@ -1,0 +1,12 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource>
+        <file alias="icon_bug.png">Resources/icons/bug.png</file>
+        <file alias="icon_donate.png">Resources/icons/donate.png</file>
+        <file alias="icon_mail.png">Resources/icons/mail.png</file>
+        <file alias="icon_www.png">Resources/icons/www.png</file>
+        <file alias="icon_logo.png">Resources/icons/logo.png</file>
+        <file alias="image_susan-alipay.jpg">Resources/susan-alipay.jpg</file>
+        <file alias="image_susan-wechat.jpg">Resources/susan-wechat.jpg</file>
+    </qresource>
+</RCC>

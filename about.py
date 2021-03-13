@@ -23,7 +23,7 @@ class DialogAbout(QDialog):
         """Custom about dialog"""
 
         _translate = QtCore.QCoreApplication.translate
-        name = "{}: {}".format(_translate("WindowApp", self.app.config.get("name")), self.app.config.get("version"))
+        name = "{}: {}".format(_translate("WindowApp", self.app.config.get("name")), self.app.config.get("version", "1.0"))
         self.ui.labelVersion.setText(name)
 
         email = self.app.config.get("email")

@@ -10,13 +10,6 @@
     <height>100</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>GitHub HOST - Update</string>
-  </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>Resources/icons/logo.png</normaloff>Resources/icons/logo.png</iconset>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="labelTitle">
