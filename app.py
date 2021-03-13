@@ -44,6 +44,7 @@ class AppWindow(QMainWindow):
         self.initStatusBar()
         self.bindMenuActions()
         self.bindTools()
+        self.initWindow()
 
     def initStatusBar(self):
         """Init window status bar"""
@@ -64,7 +65,6 @@ class AppWindow(QMainWindow):
 
         self.ui.btnUpdate.clicked.connect(self.clickHostUpdate)
         self.ui.btnUpdate.setIcon(self.style().standardIcon(QStyle.SP_BrowserReload))
-        self.ui.btnUpdate.setEnabled(False)
 
         self.ui.btnSave.clicked.connect(self.clickHostSave)
         self.ui.btnSave.setIcon(self.style().standardIcon(QStyle.SP_DriveFDIcon))
@@ -72,6 +72,16 @@ class AppWindow(QMainWindow):
 
         self.ui.btnDonate.clicked.connect(self.menuActionDonate)
         self.ui.btnDonate.setIcon(self.style().standardIcon(QStyle.SP_DialogHelpButton))
+
+    def initWindow(self):
+        """Init the window"""
+
+        if self.config.isWindows():
+            path = r'C:\Windows\System32\drivers\etc\hosts'
+        else:
+            path = r'/etc/hosts'
+
+        self.previewHostContent(path)
 
     def bindMenuActions(self):
         """Menu click actions register"""
@@ -120,10 +130,9 @@ class AppWindow(QMainWindow):
         url = self.config.get("issue")
         webbrowser.open(url)
 
-    def clickHostOpen(self):
-        """Select host file dialog"""
+    def previewHostContent(self, host):
+        """Get the host content"""
 
-        host, _ = QFileDialog.getOpenFileName()
         if host and os.path.exists(host):
             self.ui.hostPath.setText(host)
             palette = self.ui.hostPath.palette()
@@ -145,14 +154,23 @@ class AppWindow(QMainWindow):
                     f.close()
 
                 self.ui.textHost.setPlainText(f"{os.linesep}".join(self.host))
-                self.ui.btnUpdate.setEnabled(True)
+                return True
             except Exception as e:
-                _translate = QtCore.QCoreApplication.translate
-                QMessageBox.critical(
-                    self,
-                    _translate("WindowApp", "Host read error"),
-                    _translate("WindowApp", f"{e}"),
-                    QMessageBox.Ok)
+                return False
+        else:
+            return False
+
+    def clickHostOpen(self):
+        """Select host file dialog"""
+
+        host, _ = QFileDialog.getOpenFileName()
+        if not self.previewHostContent(host):
+            _translate = QtCore.QCoreApplication.translate
+            QMessageBox.critical(
+                self,
+                _translate("WindowApp", "Host read error"),
+                _translate("WindowApp", f"Read host: {host} content failed!"),
+                QMessageBox.Ok)
 
     def clickHostUpdate(self):
         """Start update host dns"""

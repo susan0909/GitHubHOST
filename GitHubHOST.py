@@ -5,7 +5,6 @@ import sys
 import config
 
 from PyQt5 import QtCore
-from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication
 from app import AppWindow
 
@@ -18,7 +17,8 @@ if __name__ == '__main__':
 
     # Create application and initialize
     app = QApplication(sys.argv)
-    app.setFont(QFont("NSimSun", 9))
+    # from PyQt5.QtGui import QFont
+    # app.setFont(QFont("NSimSun", 9))
     config = config.Config()
     window = AppWindow(config)
 

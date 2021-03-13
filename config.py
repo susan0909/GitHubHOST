@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from configparser import ConfigParser, SectionProxy
+import sys
 
 
 configurations = {
@@ -36,8 +36,25 @@ configurations = {
 }
 
 
+def GetOS():
+    """Get the OS"""
+
+    if sys.platform.lower().startswith('darwin'):
+        return 'mac'
+    elif sys.platform.lower().startswith('linux'):
+        return 'linux'
+    elif sys.platform.lower().startswith('win'):
+        return 'win'
+    else:
+        return 'other'
+
+
 class Config:
 
     def get(self, key, default=None):
 
         return configurations.get(key, default)
+
+    def isWindows(self):
+
+        return "win" == GetOS()
