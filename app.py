@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import locale
 import re
 import webbrowser
 from datetime import datetime
@@ -25,13 +24,8 @@ class AppWindow(QMainWindow):
     def __init__(self, config: Config, parent=None):
         super(AppWindow, self).__init__(parent)
 
-        lang, _ = locale.getdefaultlocale()
-        language = "languages/window_app_EN.qm"
-        if "zh_CN" == lang:
-            language = "languages/window_app_zh_CN.qm"
-
         self.trans = QTranslator()
-        self.trans.load(language)
+        self.trans.load(":/translations/window_app")
         QApplication.instance().installTranslator(self.trans)
 
         self.ui = window_app.Ui_WindowApp()
@@ -164,7 +158,7 @@ class AppWindow(QMainWindow):
         """Select host file dialog"""
 
         host, _ = QFileDialog.getOpenFileName()
-        if not self.previewHostContent(host):
+        if host and not self.previewHostContent(host):
             _translate = QtCore.QCoreApplication.translate
             QMessageBox.critical(
                 self,
