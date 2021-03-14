@@ -32,11 +32,11 @@ Take care! The application build on Windows 10 with python 3.8, not tested all w
 
 - Setp 2: Click `Update` button
 
-![Click update host dns](assets/screenshots/win-screen-02.jpg)
+![Click update host dns](assets/screenshots/macos-screen-02.jpg)
 
 - Setp 3: Click `Save`button
 
-![Save the host ip](assets/screenshots/win-screen-03.jpg)
+![Save the host ip](assets/screenshots/macos-screen-03.jpg)
 
 > If this host path string color is red. don't save directly, just copy the content to save a tmp file, eg: `~/myhost`. then open a terminal run: `sudo mv /etc/hosts /etc/hosts.01 && sudo mv ~/myhost /etc/hosts`
 
