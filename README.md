@@ -8,7 +8,7 @@ GitHub HOST 更新小工具, 问题交流请加QQ群: `819888516`
 
 Take care! The application build on Windows 10 with python 3.8, not tested all windows platforms.
 
-Download the application [GitHubHOST for Windows X64](hhttps://github.com/susan0909/GitHubHOST/releases/download/v1.0/Window-GitHubHOST-1.0-X86_64.zip) and refer the following information.
+Download the application [GitHubHOST for Windows X64](https://github.com/susan0909/GitHubHOST/releases/download/v1.0/Window-GitHubHOST-1.0-X86_64.zip) and refer the following information.
 
 - Step 1: Open the application: `GitHubHOST-1.0.exe`
 
