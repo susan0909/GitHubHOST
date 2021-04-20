@@ -17,8 +17,6 @@ if __name__ == '__main__':
 
     # Create application and initialize
     app = QApplication(sys.argv)
-    # from PyQt5.QtGui import QFont
-    # app.setFont(QFont("NSimSun", 9))
     config = config.Config()
     window = AppWindow(config)
 

@@ -46,7 +46,7 @@ class AppWindow(QMainWindow):
         statusVersion = QtWidgets.QLabel()
         _translate = QtCore.QCoreApplication.translate
 
-        version = "{}: {}".format(_translate("WindowApp", "版本"), self.config.get("version", "0.0"))
+        version = "{}: {}".format(_translate("WindowApp", "Version"), self.config.get("version", "0.0"))
         statusVersion.setText(version)
 
         self.ui.statusbar.addPermanentWidget(statusVersion)
@@ -54,14 +54,14 @@ class AppWindow(QMainWindow):
     def bindTools(self):
         """Bind tools button"""
 
-        self.ui.btnOpen.setIcon(self.style().standardIcon(QStyle.SP_FileDialogStart))
+        self.ui.btnOpen.setIcon(self.style().standardIcon(QStyle.SP_DialogOpenButton))
         self.ui.btnOpen.clicked.connect(self.clickHostOpen)
 
         self.ui.btnUpdate.clicked.connect(self.clickHostUpdate)
         self.ui.btnUpdate.setIcon(self.style().standardIcon(QStyle.SP_BrowserReload))
 
         self.ui.btnSave.clicked.connect(self.clickHostSave)
-        self.ui.btnSave.setIcon(self.style().standardIcon(QStyle.SP_DriveFDIcon))
+        self.ui.btnSave.setIcon(self.style().standardIcon(QStyle.SP_DialogSaveButton))
         self.ui.btnSave.setEnabled(False)
 
         self.ui.btnDonate.clicked.connect(self.menuActionDonate)
@@ -150,6 +150,7 @@ class AppWindow(QMainWindow):
                 self.ui.textHost.setPlainText(f"{os.linesep}".join(self.host))
                 return True
             except Exception as e:
+                print(f"Read host error:{e}")
                 return False
         else:
             return False
@@ -201,9 +202,9 @@ class AppWindow(QMainWindow):
         if not self.hostWritable or not self.hostPath:
             QMessageBox.warning(
                 self,
-                _translate("WindowApp", "警告信息"),
+                _translate("WindowApp", "Warning"),
                 _translate("WindowApp",
-                           "您当前账号无权限修改HOST文件,\n请复制预览框的内容手动覆盖HOST文件内容."),
+                           "Can't rewrite the host content,\nPlease copy the content replace the host file manually."),
                 QMessageBox.Ok)
             return
 
@@ -214,9 +215,9 @@ class AppWindow(QMainWindow):
 
         QMessageBox.information(
             self,
-            _translate("WindowApp", "更新成功"),
+            _translate("WindowApp", "Success"),
             _translate("WindowApp",
-                       "祝贺你!\n最新的GitHub DNS信息已经保存到你本地的HOST中."),
+                       "Congratulations!\nThe latest GitHub HOST information was updated in your host."),
             QMessageBox.Ok)
 
     def rebuildHostData(self):
