@@ -66,7 +66,7 @@
         </font>
        </property>
        <property name="text">
-        <string>请我喝一杯</string>
+        <string>Donate</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -211,7 +211,7 @@
           <string notr="true">* { border: none; background-color: transparent; }</string>
          </property>
          <property name="text">
-          <string>微信</string>
+          <string>WeChat</string>
          </property>
         </widget>
        </item>
@@ -249,7 +249,7 @@
           <string notr="true">* { border: none; background-color: transparent; }</string>
          </property>
          <property name="text">
-          <string>支付宝</string>
+          <string>AliPay</string>
          </property>
         </widget>
        </item>
@@ -379,7 +379,7 @@
         </size>
        </property>
        <property name="text">
-        <string>如果此开源软件对您有帮助, 欢迎打赏支持我!</string>
+        <string>Buy me a beer if it is helpful to you!</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

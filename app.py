@@ -164,7 +164,7 @@ class AppWindow(QMainWindow):
             QMessageBox.critical(
                 self,
                 _translate("WindowApp", "Host read error"),
-                _translate("WindowApp", f"Read host: {host} content failed!"),
+                _translate("WindowApp", "Read host content failed!"),
                 QMessageBox.Ok)
 
     def clickHostUpdate(self):
@@ -204,7 +204,7 @@ class AppWindow(QMainWindow):
                 self,
                 _translate("WindowApp", "Warning"),
                 _translate("WindowApp",
-                           "Can't rewrite the host content,\nPlease copy the content replace the host file manually."),
+                           "Can not rewrite the host content,\nPlease copy the content replace the host file manually."),
                 QMessageBox.Ok)
             return
 
