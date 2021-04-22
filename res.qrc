@@ -14,6 +14,7 @@
         <file alias="logo512.png">assets/images/logo512.png</file>
     </qresource>
     <qresource prefix="/translations" lang="zh_CN">
+        <file alias="app">assets/languages/app_zh_CN.qm</file>
         <file alias="window_app">assets/languages/window_app_zh_CN.qm</file>
         <file alias="dialog_donate">assets/languages/dialog_donate_zh_CN.qm</file>
     </qresource>

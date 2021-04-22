@@ -4,6 +4,7 @@
 import os
 import re
 import webbrowser
+import qtawesome as qta
 from datetime import datetime
 
 import window_app
@@ -25,7 +26,7 @@ class AppWindow(QMainWindow):
         super(AppWindow, self).__init__(parent)
 
         self.trans = QTranslator()
-        self.trans.load(":/translations/window_app")
+        self.trans.load(":/translations/app")
         QApplication.instance().installTranslator(self.trans)
 
         self.ui = window_app.Ui_WindowApp()
@@ -64,8 +65,11 @@ class AppWindow(QMainWindow):
         self.ui.btnSave.setIcon(self.style().standardIcon(QStyle.SP_DialogSaveButton))
         self.ui.btnSave.setEnabled(False)
 
+        self.ui.btnAdvance.setIcon(qta.icon('fa5s.cog'))
+
         self.ui.btnDonate.clicked.connect(self.menuActionDonate)
-        self.ui.btnDonate.setIcon(self.style().standardIcon(QStyle.SP_DialogHelpButton))
+        # self.ui.btnDonate.setIcon(self.style().standardIcon(QStyle.SP_DialogHelpButton))
+        self.ui.btnDonate.setIcon(qta.icon('fa5s.donate'))
 
     def initWindow(self):
         """Init the window"""
@@ -89,7 +93,7 @@ class AppWindow(QMainWindow):
         self.ui.actionOnlineManual.setIcon(self.style().standardIcon(QStyle.SP_TitleBarContextHelpButton))
         self.ui.actionOnlineManual.triggered.connect(self.menuActionManual)
 
-        self.ui.actionDonate.setIcon(self.style().standardIcon(QStyle.SP_DialogHelpButton))
+        self.ui.actionDonate.setIcon(qta.icon('fa5s.donate'))
         self.ui.actionDonate.triggered.connect(self.menuActionDonate)
 
         self.ui.actionReportIssue.setIcon(self.style().standardIcon(QStyle.SP_MessageBoxWarning))

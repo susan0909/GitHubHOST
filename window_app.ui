@@ -29,7 +29,7 @@
      <number>0</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0">
       <property name="leftMargin">
        <number>10</number>
       </property>
@@ -74,6 +74,13 @@
        <widget class="QPushButton" name="btnSave">
         <property name="text">
          <string>Save</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnAdvance">
+        <property name="text">
+         <string>Advance</string>
         </property>
        </widget>
       </item>
@@ -148,7 +155,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>24</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
