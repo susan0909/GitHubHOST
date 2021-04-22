@@ -4,8 +4,11 @@
 import time
 import dialog_update
 
-from PyQt5.QtCore import Qt
+from PyQt5 import QtGui
+from PyQt5.QtCore import Qt, QSettings
 from PyQt5.QtWidgets import QDialog
+
+from config import configurations
 
 
 class DialogUpdate(QDialog):
@@ -14,11 +17,25 @@ class DialogUpdate(QDialog):
         super(DialogUpdate, self).__init__(parent)
         self.ui = dialog_update.Ui_DialogUpdate()
         self.ui.setupUi(self)
+
+        self.setting = QSettings()
+
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.fetched = []
         from app import AppWindow
         if isinstance(app, AppWindow):
             self.app = app
+
+    def showEvent(self, event: QtGui.QShowEvent) -> None:
+        domains = []
+        if "domains" in self.settings.childGroups():
+            self.settings.beginGroup("domains")
+            domains = self.settings.childKeys()
+            self.settings.endGroup()
+        if not domains:
+            domains = configurations.get("domains")
+
+        print(domains)
 
     def updateProgress(self, item):
         """Update Progress bar"""

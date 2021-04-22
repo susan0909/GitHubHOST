@@ -15,6 +15,7 @@ from PyQt5.QtGui import QPalette
 from PyQt5.QtWidgets import QApplication, QMainWindow, QStyle, QFileDialog, QMessageBox
 
 from config import Config
+from advance import AdvanceDialog
 from about import DialogAbout
 from donate import DialogDonate
 from update import DialogUpdate
@@ -66,6 +67,7 @@ class AppWindow(QMainWindow):
         self.ui.btnSave.setEnabled(False)
 
         self.ui.btnAdvance.setIcon(qta.icon('fa5s.cog'))
+        self.ui.btnAdvance.clicked.connect(self.openAdvanceDialog)
 
         self.ui.btnDonate.clicked.connect(self.menuActionDonate)
         # self.ui.btnDonate.setIcon(self.style().standardIcon(QStyle.SP_DialogHelpButton))
@@ -127,6 +129,10 @@ class AppWindow(QMainWindow):
 
         url = self.config.get("issue")
         webbrowser.open(url)
+
+    def openAdvanceDialog(self):
+        dialog = AdvanceDialog(self)
+        dialog.exec()
 
     def previewHostContent(self, host):
         """Get the host content"""

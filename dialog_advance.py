@@ -35,12 +35,13 @@ class Ui_Dialog(object):
         self.horizontalLayout_2.addItem(spacerItem)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.pushButton = QtWidgets.QPushButton(Dialog)
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout.addWidget(self.pushButton)
-        self.pushButton_2 = QtWidgets.QPushButton(Dialog)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.horizontalLayout.addWidget(self.pushButton_2)
+        self.btnSave = QtWidgets.QPushButton(Dialog)
+        self.btnSave.setAutoDefault(False)
+        self.btnSave.setObjectName("btnSave")
+        self.horizontalLayout.addWidget(self.btnSave)
+        self.btnCancel = QtWidgets.QPushButton(Dialog)
+        self.btnCancel.setObjectName("btnCancel")
+        self.horizontalLayout.addWidget(self.btnCancel)
         self.horizontalLayout_2.addLayout(self.horizontalLayout)
         self.horizontalLayout_2.setStretch(0, 1)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
@@ -52,6 +53,6 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Domain Configurator"))
-        self.pushButton.setText(_translate("Dialog", "Save"))
-        self.pushButton_2.setText(_translate("Dialog", "Cancel"))
+        self.btnSave.setText(_translate("Dialog", "Save"))
+        self.btnCancel.setText(_translate("Dialog", "Cancel"))
 import res_rc
