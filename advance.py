@@ -18,6 +18,7 @@ class AdvanceDialog(QDialog):
         self.ui.setupUi(self)
 
         # MacOS: ~/Library/Preferences/QCoreApplication.organizationDomain().QCoreApplication.applicationName().plist
+        # Linux: ~/.config/QCoreApplication.organizationName()/QCoreApplication.applicationName().conf
         self.settings = QSettings()
         # print(self.settings.fileName())
 
