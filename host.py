@@ -6,10 +6,10 @@ import requests
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 from collections import defaultdict
-from ping3 import ping
+# from ping3 import ping
 import ping3
 
-ping3.DEBUG = True
+# ping3.DEBUG = True
 
 
 class HostDNS:
@@ -19,11 +19,11 @@ class HostDNS:
 
         try:
             seconds = ping3.ping(ip, timeout=30)
-            print(f"ping ip:{ip} seconds:{seconds}")
+            # print(f"ping ip:{ip} seconds:{seconds}")
             return int(seconds * 1000)
         except Exception as e:
             print(f"Ping ip:{ip} error: {e}")
-            return 0
+            return 100000
 
     def getBestIp(self, ips):
         """Ping ip speed"""
@@ -128,8 +128,8 @@ if __name__ == '__main__':
 
     host = HostDNS()
 
-    api = "140.82.112.5"
-    assets = "185.199.108.153"
-    www = "140.82.113.4"
-
-    print(host.getIpPing(api))
+    # api = "140.82.112.5"
+    # assets = "185.199.108.153"
+    # www = "140.82.113.4"
+    # print(host.getIpPing(api))
+    print(host.getDomainIp('github.com'))
