@@ -27,6 +27,7 @@ class AppWindow(QMainWindow):
 
         self.trans = QTranslator()
         self.trans.load(":/translations/app")
+        self.trans.load(":/translations/window_app")
         QApplication.instance().installTranslator(self.trans)
 
         self.ui = window_app.Ui_WindowApp()

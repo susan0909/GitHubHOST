@@ -37,9 +37,6 @@ class AdvanceDialog(QDialog):
         if "domains" in self.settings.childGroups():
             self.settings.beginGroup("domains")
             domains = self.settings.childKeys()
-            print("From custom domains:")
-            print(self.settings.fileName())
-            print(domains)
             self.settings.endGroup()
         if not domains:
             domains = configurations.get("domains")
