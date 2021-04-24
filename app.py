@@ -19,8 +19,6 @@ from advance import AdvanceDialog
 from about import DialogAbout
 from donate import DialogDonate
 from updater import DialogUpdater
-# from update import DialogUpdate
-from worker import WorkerThread
 
 
 class AppWindow(QMainWindow):
@@ -42,6 +40,12 @@ class AppWindow(QMainWindow):
         self.bindMenuActions()
         self.bindTools()
         self.initWindow()
+
+    def resetParsedDomains(self):
+        self.domains = {}
+
+    def addParsedDomain(self, domain, ip):
+        self.domains[domain] = ip
 
     def initStatusBar(self):
         """Init window status bar"""
@@ -186,29 +190,6 @@ class AppWindow(QMainWindow):
         # dialog.setWindowFlag(QtCore.Qt.WindowCloseButtonHint)
         # dialog.setWindowFlags(QtCore.Qt.WindowTitleHint)
         dialog.exec()
-
-        # _translate = QtCore.QCoreApplication.translate
-        # domain_cfg = self.config.get('domains', [])
-        # self.domains = {}
-        # if domain_cfg:
-        #     for domain in domain_cfg:
-        #         domain = domain.strip()
-        #         if len(domain) > 3:
-        #             self.domains[domain] = None
-        #
-        # if len(self.domains) < 1:
-        #     QMessageBox.critical(
-        #         self,
-        #         _translate("WindowApp", "Host DNS Error"),
-        #         _translate("WindowApp", "Application configuration lost!"),
-        #         QMessageBox.Ok)
-        #     return
-        #
-        # workerThread = WorkerThread(self.domains)
-        # dialog = DialogUpdate(self)
-        # workerThread.signal.connect(dialog.updateProgress)
-        # workerThread.start()
-        # dialog.exec()
 
         self.rebuildHostData()
 
