@@ -5,7 +5,7 @@ import sys
 
 
 configurations = {
-    "version": "1.0",
+    "version": "1.1",
     "email": "susan_tony_li@163.com",
     "name": "GitHub HOST",
     "website": "https://github.com/susan0909/GitHubHOST",
