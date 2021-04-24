@@ -43,6 +43,7 @@ class AdvanceDialog(QDialog):
         self.ui.textEdit.setPlainText(f"{os.linesep}".join(list(domains)))
 
     def handleClickedButtonSave(self):
+        self.settings.clear()
         text = self.ui.textEdit.toPlainText()
         lines = text.split()
         self.settings.beginGroup("domains")

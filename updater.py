@@ -35,17 +35,11 @@ class DialogUpdater(QDialog):
         self.setting = QSettings()
         self.updating = False
         self.domains = []
-        if "domains" in self.setting.childGroups():
-            self.setting.beginGroup("domains")
-            self.domains = self.setting.childKeys()
-            self.setting.endGroup()
-        if not self.domains:
-            self.domains = configurations.get("domains")
 
     def process(self, data):
         # print(data)
         action, host, ip, secs, last = data
-        if "end" == action and ip and host and secs and secs < 10000:
+        if "end" == action and ip and host and secs and secs < 99999:
             if hasattr(self.parent(), "addParsedDomain"):
                 self.parent().addParsedDomain(host, ip)
 
@@ -93,7 +87,7 @@ class DialogUpdater(QDialog):
         flag.setFlat(True)
         if "end" == status:
             flag.setText('')
-            if ip and ms:
+            if ip and ms < 99999:
                 flag.setIcon(qta.icon('fa5.check-circle', color='green'))
                 ms = "{:.3f}s".format(ms/1000)
             else:
@@ -127,6 +121,13 @@ class DialogUpdater(QDialog):
         return widget
 
     def showEvent(self, event: QtGui.QShowEvent) -> None:
+
+        if "domains" in self.setting.childGroups():
+            self.setting.beginGroup("domains")
+            self.domains = self.setting.childKeys()
+            self.setting.endGroup()
+        if not self.domains:
+            self.domains = configurations.get("domains")
 
         if not self.updating and self.domains:
             self.updating = True

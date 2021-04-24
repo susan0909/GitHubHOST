@@ -16,7 +16,7 @@ if __name__ == '__main__':
     # pyinstaller --clean --onefile --windowed --noconfirm --icon logo.icns --name "GitHub HOST" GitHubHOST.py
 
     # Deployed on Windows:
-    # pyinstaller.exe -F -w -i logo128.ico --path 'C:\Users\Susan\AppData\Local\Programs\Python\Python38\Lib\site-packages\PyQt5\Qt\bin' .\GitHubHOST.py
+    # pyinstaller.exe -F -w -i logo128.ico --path '.\venv\Lib\site-packages\PyQt5\Qt5\bin' .\GitHubHOST.py
 
     # HiDPI Support
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)

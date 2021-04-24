@@ -144,15 +144,14 @@ class AppWindow(QMainWindow):
         """Get the host content"""
 
         if host and os.path.exists(host):
+            self.hostPath = host
             self.ui.hostPath.setText(host)
             palette = self.ui.hostPath.palette()
             if os.access(host, os.W_OK):
                 self.hostWritable = True
-                self.hostPath = host
                 palette.setColor(QPalette.Text, QtCore.Qt.darkGreen)
             else:
                 self.hostWritable = False
-                self.hostPath = None
                 palette.setColor(QPalette.Text, QtCore.Qt.red)
             self.ui.hostPath.setPalette(palette)
 
@@ -197,8 +196,18 @@ class AppWindow(QMainWindow):
     def clickHostSave(self):
         """Save the updated host"""
 
+        if not self.hostPath:
+            return
+
+        # os.access 不能正确检测 HOST 文件的可写性
+        # print(f"Host:{self.hostPath} permission:{os.access(self.hostPath, os.W_OK)}")
         _translate = QtCore.QCoreApplication.translate
-        if not self.hostWritable or not self.hostPath:
+        content = self.ui.textHost.toPlainText()
+        try:
+            with open(self.hostPath, "w", encoding="utf-8") as f:
+                f.write(content)
+        except Exception as e:
+            print(f"Update host error:{e}")
             QMessageBox.warning(
                 self,
                 _translate("WindowApp", "Warning"),
@@ -206,11 +215,6 @@ class AppWindow(QMainWindow):
                            "Can not rewrite the host content,\nPlease copy the content replace the host file manually."),
                 QMessageBox.Ok)
             return
-
-        content = self.ui.textHost.toPlainText()
-        with open(self.hostPath, "w", encoding="utf-8") as f:
-            f.write(content)
-            f.close()
 
         QMessageBox.information(
             self,
