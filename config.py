@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+from os import path
 
 
 configurations = {
@@ -15,25 +16,31 @@ configurations = {
     "domains": [
         "github.com",
         "api.github.com",
+        "central.github.com",
         "assets-cdn.github.com",
         "avatars.githubusercontent.com",
-        "avatars0.githubusercontent.com",
-        "camo.githubusercontent.com",
-        "cloud.githubusercontent.com",
-        "codeload.github.com",
-        "favicons.githubusercontent.com",
-        "gist.github.com",
-        "gist.githubusercontent.com",
-        "github.githubassets.com",
-        "marketplace-screenshots.githubusercontent.com",
-        "octocaptcha.com",
         "raw.githubusercontent.com",
-        "repository-images.githubusercontent.com",
-        "uploads.github.com",
-        "user-images.githubusercontent.com",
         "github.global.ssl.fastly.net"
     ]
 }
+
+
+def ResourcePath(resource: str):
+    """
+    Return resource absolute path
+    :param resource:
+    :return:
+    """
+
+    # Application running in a PyInstaller bundle
+    if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+        # Windows: C:\Users\<User>\AppData\Local\Temp\_MEIXXXXX
+        # Linux: /tmp/_MEIXXXXX
+        bundle_dir = sys._MEIPASS
+    else:
+        bundle_dir = path.dirname(path.abspath(__file__))
+
+    return path.join(bundle_dir, resource)
 
 
 def GetOS():
@@ -49,6 +56,16 @@ def GetOS():
         return 'other'
 
 
+def IsWindows():
+    return sys.platform.lower().startswith('win')
+
+
+def HostDirectory():
+    if IsWindows():
+        return r'C:\Windows\System32\drivers\etc'
+    return r'/etc'
+
+
 class Config:
 
     def get(self, key, default=None):
@@ -58,3 +75,7 @@ class Config:
     def isWindows(self):
 
         return "win" == GetOS()
+
+    def hostDirectory(self):
+
+        return HostDirectory()

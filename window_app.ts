@@ -31,7 +31,7 @@
     <message>
         <location filename="window_app.py" line="134"/>
         <source>Donate</source>
-        <translation>打赏一下!</translation>
+        <translation>打赏一下</translation>
     </message>
     <message>
         <location filename="window_app.py" line="135"/>
@@ -66,7 +66,7 @@
     <message>
         <location filename="window_app.py" line="141"/>
         <source>Online manual(?)</source>
-        <translation>在线手册(&amp;?)</translation>
+        <translation>在线手册(?)</translation>
     </message>
     <message>
         <location filename="window_app.py" line="142"/>
@@ -76,7 +76,7 @@
     <message>
         <location filename="window_app.py" line="143"/>
         <source>Report issue(B)</source>
-        <translation>报告问题(&amp;B)</translation>
+        <translation>报告问题(B)</translation>
     </message>
     <message>
         <location filename="window_app.py" line="144"/>

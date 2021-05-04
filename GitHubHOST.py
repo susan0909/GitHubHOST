@@ -12,12 +12,6 @@ from config import configurations
 
 if __name__ == '__main__':
 
-    # Deployed on MacOSX
-    # pyinstaller --clean --onefile --windowed --noconfirm --icon logo.icns --name "GitHub HOST" GitHubHOST.py
-
-    # Deployed on Windows:
-    # pyinstaller.exe -F -w -i logo128.ico --path '.\venv\Lib\site-packages\PyQt5\Qt5\bin' .\GitHubHOST.py
-
     # HiDPI Support
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps)
@@ -29,7 +23,16 @@ if __name__ == '__main__':
     QtCore.QCoreApplication.setApplicationVersion(configurations.get("version"))
 
     # Create application and initialize
+    tr1 = QtCore.QTranslator()
+    tr2 = QtCore.QTranslator()
+    tr3 = QtCore.QTranslator()
+    tr1.load(QtCore.QLocale(), "window_app", ".", "assets/languages", ".qm")
+    tr2.load(QtCore.QLocale(), "app", ".", "assets/languages", ".qm")
+    tr3.load(QtCore.QLocale(), "dialog_donate", ".", "assets/languages", ".qm")
     app = QApplication(sys.argv)
+    app.installTranslator(tr1)
+    app.installTranslator(tr2)
+    app.installTranslator(tr3)
     config = config.Config()
     window = AppWindow(config)
 

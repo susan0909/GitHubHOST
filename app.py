@@ -9,10 +9,9 @@ from datetime import datetime
 
 import window_app
 
-from PyQt5.QtCore import QTranslator
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPalette
-from PyQt5.QtWidgets import QApplication, QMainWindow, QStyle, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QStyle, QFileDialog, QMessageBox
 
 from config import Config
 from advance import AdvanceDialog
@@ -25,13 +24,9 @@ class AppWindow(QMainWindow):
     def __init__(self, config: Config, parent=None):
         super(AppWindow, self).__init__(parent)
 
-        self.trans = QTranslator()
-        self.trans.load(":/translations/app")
-        self.trans.load(":/translations/window_app")
-        QApplication.instance().installTranslator(self.trans)
-
         self.ui = window_app.Ui_WindowApp()
         self.ui.setupUi(self)
+
         self.host = []
         self.hostPath = None
         self.hostWritable = False
@@ -82,12 +77,7 @@ class AppWindow(QMainWindow):
     def initWindow(self):
         """Init the window"""
 
-        if self.config.isWindows():
-            path = r'C:\Windows\System32\drivers\etc\hosts'
-        else:
-            path = r'/etc/hosts'
-
-        self.previewHostContent(path)
+        self.previewHostContent(os.path.join(self.config.hostDirectory(), 'hosts'))
 
     def bindMenuActions(self):
         """Menu click actions register"""
@@ -173,9 +163,15 @@ class AppWindow(QMainWindow):
     def clickHostOpen(self):
         """Select host file dialog"""
 
-        host, _ = QFileDialog.getOpenFileName()
+        _translate = QtCore.QCoreApplication.translate
+        host, _ = QFileDialog.getOpenFileName(
+            self,
+            _translate("WindowApp", "Select the HOST"),
+            self.config.hostDirectory(),
+            ""
+        )
         if host and not self.previewHostContent(host):
-            _translate = QtCore.QCoreApplication.translate
+
             QMessageBox.critical(
                 self,
                 _translate("WindowApp", "Host read error"),

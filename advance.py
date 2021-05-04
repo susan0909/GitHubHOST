@@ -17,11 +17,6 @@ class AdvanceDialog(QDialog):
         self.ui = dialog_advance.Ui_Dialog()
         self.ui.setupUi(self)
 
-        # MacOS: ~/Library/Preferences/QCoreApplication.organizationDomain().QCoreApplication.applicationName().plist
-        # Linux: ~/.config/QCoreApplication.organizationName()/QCoreApplication.applicationName().conf
-        self.settings = QSettings()
-        # print(self.settings.fileName())
-
         self.ui.btnCancel.clicked.connect(self.close)
         self.ui.btnSave.clicked.connect(self.handleClickedButtonSave)
 
@@ -34,25 +29,30 @@ class AdvanceDialog(QDialog):
 
     def showEvent(self, event: QtGui.QShowEvent) -> None:
         domains = []
-        if "domains" in self.settings.childGroups():
-            self.settings.beginGroup("domains")
-            domains = self.settings.childKeys()
-            self.settings.endGroup()
+        setting = QSettings()
+        # MacOS: ~/Library/Preferences/QCoreApplication.organizationDomain().QCoreApplication.applicationName().plist
+        # Linux: ~/.config/QCoreApplication.organizationName()/QCoreApplication.applicationName().conf
+        # print(f"Setting storage: {setting.fileName()}")
+        if "domains" in setting.childGroups():
+            setting.beginGroup("domains")
+            domains = setting.childKeys()
+            setting.endGroup()
         if not domains:
             domains = configurations.get("domains")
         self.ui.textEdit.setPlainText(f"{os.linesep}".join(list(domains)))
 
     def handleClickedButtonSave(self):
-        self.settings.clear()
+        setting = QSettings()
+        setting.clear()
         text = self.ui.textEdit.toPlainText()
         lines = text.split()
-        self.settings.beginGroup("domains")
+        setting.beginGroup("domains")
         for line in lines:
             line = line.strip()
             line = line.replace('http://', '').replace('https://', '')
             line = (line.split('/'))[0]
             if line:
-                self.settings.setValue(line, "")
-        self.settings.endGroup()
-        self.settings.sync()
+                setting.setValue(line, "")
+        setting.endGroup()
+        setting.sync()
         self.close()
