@@ -6,7 +6,10 @@ import requests
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 from collections import defaultdict
-from ping3 import ping
+# from ping3 import ping
+import ping3
+
+# ping3.DEBUG = True
 
 
 class HostDNS:
@@ -15,19 +18,20 @@ class HostDNS:
         """Get ip ping delay ms"""
 
         try:
-            seconds = ping(ip, timeout=10)
+            seconds = ping3.ping(ip, timeout=30)
+            # print(f"ping ip:{ip} seconds:{seconds}")
             return int(seconds * 1000)
         except Exception as e:
-            # print(f"Ping ip:{ip} error: {e}")
-            return 0
+            print(f"Ping ip:{ip} error: {e}")
+            return 100000
 
     def getBestIp(self, ips):
         """Ping ip speed"""
 
         if len(ips) < 1:
-            return None
+            return None, None
         elif len(ips) == 1:
-            return ips[0]
+            return ips[0], self.getIpPing(ips[0])
         else:
             ms = 100000
             best_ip = ips[0]
@@ -36,13 +40,13 @@ class HostDNS:
                 if _ms < ms:
                     best_ip = ip
                     ms = _ms
-            return best_ip
+            return best_ip, ms
 
     def parseIp(self, domain: str, html: str):
         """Parse IP from HTML"""
 
         if not html:
-            return None
+            return None, None
 
         soup = BeautifulSoup(html, "html.parser")
         dom = soup.select_one("#dnsinfo")
@@ -55,7 +59,7 @@ class HostDNS:
                         data.append((tds[0].text.lower().strip(), tds[1].text.lower().strip(), tds[2].text.lower().strip()))
 
         if not data:
-            return None
+            return None, None
 
         host_ip = defaultdict(list)
         host_names = {}
@@ -80,12 +84,12 @@ class HostDNS:
                     ips = host_ip["@"]
 
         if not ips:
-            return None
+            return None, None
 
-        best_ip = self.getBestIp(ips)
+        best_ip, ms = self.getBestIp(ips)
         if not best_ip:
             print(f"domain: {domain} has invalid ip: {best_ip}")
-        return best_ip
+        return best_ip, ms
 
     def getDomainResponse(self, domain: str):
         """Get Request Response"""
@@ -118,3 +122,14 @@ class HostDNS:
 
         html = self.getDomainResponse(domain)
         return self.parseIp(domain, html)
+
+
+if __name__ == '__main__':
+
+    host = HostDNS()
+
+    # api = "140.82.112.5"
+    # assets = "185.199.108.153"
+    # www = "140.82.113.4"
+    # print(host.getIpPing(api))
+    print(host.getDomainIp('github.com'))

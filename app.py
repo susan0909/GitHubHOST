@@ -4,78 +4,85 @@
 import os
 import re
 import webbrowser
+import qtawesome as qta
 from datetime import datetime
 
 import window_app
 
-from PyQt5.QtCore import QTranslator
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPalette
-from PyQt5.QtWidgets import QApplication, QMainWindow, QStyle, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QStyle, QFileDialog, QMessageBox
 
 from config import Config
+from advance import AdvanceDialog
 from about import DialogAbout
 from donate import DialogDonate
-from update import DialogUpdate
-from worker import WorkerThread
+from updater import DialogUpdater
 
 
 class AppWindow(QMainWindow):
-    def __init__(self, config: Config, parent=None):
+    def __init__(self, parent=None):
         super(AppWindow, self).__init__(parent)
-
-        self.trans = QTranslator()
-        self.trans.load(":/translations/window_app")
-        QApplication.instance().installTranslator(self.trans)
 
         self.ui = window_app.Ui_WindowApp()
         self.ui.setupUi(self)
+
         self.host = []
         self.hostPath = None
         self.hostWritable = False
         self.domains = {}
-        self.config = config
+        self.config = Config()
         self.initStatusBar()
         self.bindMenuActions()
         self.bindTools()
         self.initWindow()
 
+    def resetParsedDomains(self):
+        self.domains = {}
+
+    def addParsedDomain(self, domain, ip):
+        self.domains[domain] = ip
+
     def initStatusBar(self):
         """Init window status bar"""
+
+        lang = QtCore.QLocale().system().uiLanguages()
+        if len(lang):
+            labelLang = QtWidgets.QLabel()
+            labelLang.setText(lang[0])
+            self.ui.statusbar.addPermanentWidget(labelLang)
 
         statusVersion = QtWidgets.QLabel()
         _translate = QtCore.QCoreApplication.translate
 
-        version = "{}: {}".format(_translate("WindowApp", "版本"), self.config.get("version", "0.0"))
+        version = "{}: {}".format(_translate("WindowApp", "Version"), self.config.get("version", "0.0"))
         statusVersion.setText(version)
-
         self.ui.statusbar.addPermanentWidget(statusVersion)
 
     def bindTools(self):
         """Bind tools button"""
 
-        self.ui.btnOpen.setIcon(self.style().standardIcon(QStyle.SP_FileDialogStart))
+        self.ui.btnOpen.setIcon(self.style().standardIcon(QStyle.SP_DialogOpenButton))
         self.ui.btnOpen.clicked.connect(self.clickHostOpen)
 
         self.ui.btnUpdate.clicked.connect(self.clickHostUpdate)
         self.ui.btnUpdate.setIcon(self.style().standardIcon(QStyle.SP_BrowserReload))
 
         self.ui.btnSave.clicked.connect(self.clickHostSave)
-        self.ui.btnSave.setIcon(self.style().standardIcon(QStyle.SP_DriveFDIcon))
+        self.ui.btnSave.setIcon(self.style().standardIcon(QStyle.SP_DialogSaveButton))
         self.ui.btnSave.setEnabled(False)
 
+        self.ui.btnAdvance.setIcon(qta.icon('fa5s.cog'))
+        self.ui.btnAdvance.clicked.connect(self.openAdvanceDialog)
+
         self.ui.btnDonate.clicked.connect(self.menuActionDonate)
-        self.ui.btnDonate.setIcon(self.style().standardIcon(QStyle.SP_DialogHelpButton))
+        # self.ui.btnDonate.setIcon(self.style().standardIcon(QStyle.SP_DialogHelpButton))
+        self.ui.btnDonate.setIcon(qta.icon('fa5s.donate'))
 
     def initWindow(self):
         """Init the window"""
 
-        if self.config.isWindows():
-            path = r'C:\Windows\System32\drivers\etc\hosts'
-        else:
-            path = r'/etc/hosts'
-
-        self.previewHostContent(path)
+        self.previewHostContent(os.path.join(self.config.hostDirectory(), 'hosts'))
 
     def bindMenuActions(self):
         """Menu click actions register"""
@@ -89,7 +96,7 @@ class AppWindow(QMainWindow):
         self.ui.actionOnlineManual.setIcon(self.style().standardIcon(QStyle.SP_TitleBarContextHelpButton))
         self.ui.actionOnlineManual.triggered.connect(self.menuActionManual)
 
-        self.ui.actionDonate.setIcon(self.style().standardIcon(QStyle.SP_DialogHelpButton))
+        self.ui.actionDonate.setIcon(qta.icon('fa5s.donate'))
         self.ui.actionDonate.triggered.connect(self.menuActionDonate)
 
         self.ui.actionReportIssue.setIcon(self.style().standardIcon(QStyle.SP_MessageBoxWarning))
@@ -124,19 +131,22 @@ class AppWindow(QMainWindow):
         url = self.config.get("issue")
         webbrowser.open(url)
 
+    def openAdvanceDialog(self):
+        dialog = AdvanceDialog(self)
+        dialog.exec()
+
     def previewHostContent(self, host):
         """Get the host content"""
 
         if host and os.path.exists(host):
+            self.hostPath = host
             self.ui.hostPath.setText(host)
             palette = self.ui.hostPath.palette()
             if os.access(host, os.W_OK):
                 self.hostWritable = True
-                self.hostPath = host
                 palette.setColor(QPalette.Text, QtCore.Qt.darkGreen)
             else:
                 self.hostWritable = False
-                self.hostPath = None
                 palette.setColor(QPalette.Text, QtCore.Qt.red)
             self.ui.hostPath.setPalette(palette)
 
@@ -150,6 +160,7 @@ class AppWindow(QMainWindow):
                 self.ui.textHost.setPlainText(f"{os.linesep}".join(self.host))
                 return True
             except Exception as e:
+                print(f"Read host error:{e}")
                 return False
         else:
             return False
@@ -157,39 +168,28 @@ class AppWindow(QMainWindow):
     def clickHostOpen(self):
         """Select host file dialog"""
 
-        host, _ = QFileDialog.getOpenFileName()
+        _translate = QtCore.QCoreApplication.translate
+        host, _ = QFileDialog.getOpenFileName(
+            self,
+            _translate("WindowApp", "Select the HOST"),
+            self.config.hostDirectory(),
+            ""
+        )
         if host and not self.previewHostContent(host):
-            _translate = QtCore.QCoreApplication.translate
+
             QMessageBox.critical(
                 self,
                 _translate("WindowApp", "Host read error"),
-                _translate("WindowApp", f"Read host: {host} content failed!"),
+                _translate("WindowApp", "Read host content failed!"),
                 QMessageBox.Ok)
 
     def clickHostUpdate(self):
         """Start update host dns"""
 
-        _translate = QtCore.QCoreApplication.translate
-        domain_cfg = self.config.get('domains', [])
-        self.domains = {}
-        if domain_cfg:
-            for domain in domain_cfg:
-                domain = domain.strip()
-                if len(domain) > 3:
-                    self.domains[domain] = None
-
-        if len(self.domains) < 1:
-            QMessageBox.critical(
-                self,
-                _translate("WindowApp", "Host DNS Error"),
-                _translate("WindowApp", "Application configuration lost!"),
-                QMessageBox.Ok)
-            return
-
-        workerThread = WorkerThread(self.domains)
-        dialog = DialogUpdate(self)
-        workerThread.signal.connect(dialog.updateProgress)
-        workerThread.start()
+        dialog = DialogUpdater(self)
+        # dialog.setWindowFlag(QtCore.Qt.CustomizeWindowHint)
+        # dialog.setWindowFlag(QtCore.Qt.WindowCloseButtonHint)
+        # dialog.setWindowFlags(QtCore.Qt.WindowTitleHint)
         dialog.exec()
 
         self.rebuildHostData()
@@ -197,26 +197,31 @@ class AppWindow(QMainWindow):
     def clickHostSave(self):
         """Save the updated host"""
 
+        if not self.hostPath:
+            return
+
+        # os.access 不能正确检测 HOST 文件的可写性
+        # print(f"Host:{self.hostPath} permission:{os.access(self.hostPath, os.W_OK)}")
         _translate = QtCore.QCoreApplication.translate
-        if not self.hostWritable or not self.hostPath:
+        content = self.ui.textHost.toPlainText()
+        try:
+            with open(self.hostPath, "w", encoding="utf-8") as f:
+                f.write(content)
+        except Exception as e:
+            print(f"Update host error:{e}")
             QMessageBox.warning(
                 self,
-                _translate("WindowApp", "警告信息"),
+                _translate("WindowApp", "Warning"),
                 _translate("WindowApp",
-                           "您当前账号无权限修改HOST文件,\n请复制预览框的内容手动覆盖HOST文件内容."),
+                           "Can not rewrite the host content,\nPlease copy the content replace the host file manually."),
                 QMessageBox.Ok)
             return
 
-        content = self.ui.textHost.toPlainText()
-        with open(self.hostPath, "w", encoding="utf-8") as f:
-            f.write(content)
-            f.close()
-
         QMessageBox.information(
             self,
-            _translate("WindowApp", "更新成功"),
+            _translate("WindowApp", "Success"),
             _translate("WindowApp",
-                       "祝贺你!\n最新的GitHub DNS信息已经保存到你本地的HOST中."),
+                       "Congratulations!\nThe latest GitHub HOST information was updated in your host."),
             QMessageBox.Ok)
 
     def rebuildHostData(self):
