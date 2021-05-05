@@ -8,9 +8,9 @@ GitHub HOST 更新小工具, 问题交流请加QQ群: `819888516`
 
 Take care! The application build on Windows 10 with python 3.8, not tested all windows platforms.
 
-Download the application [GitHubHOST for Windows X64](https://github.com/susan0909/GitHubHOST/releases/download/v1.0/Window-GitHubHOST-1.0-X86_64.zip) and refer the following information.
+Download the application [GitHubHOST for Windows X64](https://github.com/susan0909/GitHubHOST/releases/download/v1.1/Windows-GitHubHOST-1.1-X86_64.zip) and refer the following information.
 
-- Step 1: Open the application: `GitHubHOST-1.0.exe`
+- Step 1: Open the application: `GitHubHOST-1.1.exe`
 
 ![Open Application GitHubHOST](assets/screenshots/win-screen-01.png)
 
@@ -29,7 +29,7 @@ Download the application [GitHubHOST for Windows X64](https://github.com/susan09
 
 ## For Mac OS X
 
-Download the application [GitHubHOST for Mac OS](https://github.com/susan0909/GitHubHOST/releases/download/v1.0/MacOS-GitHubHOST-1.0.app.zip) and refer the following information.
+Download the application [GitHubHOST for Mac OS](https://github.com/susan0909/GitHubHOST/releases/download/v1.1/MacOS-GitHubHOST-1.1.app.zip) and refer the following information.
 
 - Step 1: Open the application: `GitHubHOST.app`
 
@@ -50,7 +50,15 @@ Download the application [GitHubHOST for Mac OS](https://github.com/susan0909/Gi
 
 ## For Linux
 
-Download the application [GitHubHOST for Linux](https://github.com/susan0909/GitHubHOST/releases/download/v1.0/Linux-GitHubHOST-1.0.tar.gz) and refer the following information.
+**Running the application by root**
+
+- Running failure try:
+
+```bash
+sudo apt install libxcb-xinerama0
+```
+
+Download the application [GitHubHOST for Linux](https://github.com/susan0909/GitHubHOST/releases/download/v1.1/Linux-GitHubHOST-1.1.tar.gz) and refer the following information.
 
 
 - Step 1: Open the application: `GitHubHOST`
