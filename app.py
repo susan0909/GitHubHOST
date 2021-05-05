@@ -46,12 +46,17 @@ class AppWindow(QMainWindow):
     def initStatusBar(self):
         """Init window status bar"""
 
+        lang = QtCore.QLocale().system().uiLanguages()
+        if len(lang):
+            labelLang = QtWidgets.QLabel()
+            labelLang.setText(lang[0])
+            self.ui.statusbar.addPermanentWidget(labelLang)
+
         statusVersion = QtWidgets.QLabel()
         _translate = QtCore.QCoreApplication.translate
 
         version = "{}: {}".format(_translate("WindowApp", "Version"), self.config.get("version", "0.0"))
         statusVersion.setText(version)
-
         self.ui.statusbar.addPermanentWidget(statusVersion)
 
     def bindTools(self):

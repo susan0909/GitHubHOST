@@ -6,7 +6,7 @@ import sys
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QApplication
 from app import AppWindow
-from config import configurations
+from config import configurations, ResourcePath
 
 
 if __name__ == '__main__':
@@ -25,9 +25,9 @@ if __name__ == '__main__':
     tr1 = QtCore.QTranslator()
     tr2 = QtCore.QTranslator()
     tr3 = QtCore.QTranslator()
-    tr1.load(QtCore.QLocale(), "window_app", ".", "assets/languages", ".qm")
-    tr2.load(QtCore.QLocale(), "app", ".", "assets/languages", ".qm")
-    tr3.load(QtCore.QLocale(), "dialog_donate", ".", "assets/languages", ".qm")
+    tr1.load(QtCore.QLocale(), "window_app", ".", ResourcePath("assets/languages"), ".qm")
+    tr2.load(QtCore.QLocale(), "app", ".", ResourcePath("assets/languages"), ".qm")
+    tr3.load(QtCore.QLocale(), "dialog_donate", ".", ResourcePath("assets/languages"), ".qm")
     app = QApplication(sys.argv)
     app.installTranslator(tr1)
     app.installTranslator(tr2)
