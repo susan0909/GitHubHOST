@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import config
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QApplication
@@ -33,8 +32,7 @@ if __name__ == '__main__':
     app.installTranslator(tr1)
     app.installTranslator(tr2)
     app.installTranslator(tr3)
-    config = config.Config()
-    window = AppWindow(config)
+    window = AppWindow()
 
     # Running
     window.show()

@@ -21,7 +21,7 @@ from updater import DialogUpdater
 
 
 class AppWindow(QMainWindow):
-    def __init__(self, config: Config, parent=None):
+    def __init__(self, parent=None):
         super(AppWindow, self).__init__(parent)
 
         self.ui = window_app.Ui_WindowApp()
@@ -31,7 +31,7 @@ class AppWindow(QMainWindow):
         self.hostPath = None
         self.hostWritable = False
         self.domains = {}
-        self.config = config
+        self.config = Config()
         self.initStatusBar()
         self.bindMenuActions()
         self.bindTools()
